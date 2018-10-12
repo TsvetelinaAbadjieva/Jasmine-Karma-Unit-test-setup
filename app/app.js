@@ -1,5 +1,6 @@
 
-var MyApp = angular.module('MyApp', ['ui.bootstrap']);
+var MyApp = angular.module('MyApp', []);
+// var MyApp = angular.module('MyApp', ['ui.bootstrap']);
 
 MyApp.controller('foodController', ['$scope', function ($scope) {
     $scope.food = {
@@ -11,14 +12,14 @@ MyApp.controller('foodController', ['$scope', function ($scope) {
 }])
 
 
-MyApp.controller('addFoodController',[ '$scope', function ($scope) {
+MyApp.controller('addFoodController', ['$scope', function ($scope) {
     $scope.food.name = '';
     $scope.food.type = 'dinner';
     $scope.foods = [];
 
-    $scope.addFood() = function(){
+    $scope.addFood() = function () {
         console.log($scope.food.name);
-        var food = {name: $scope.food.name, type:$scope.food.type}
+        var food = { name: $scope.food.name, type: $scope.food.type }
         $scope.foods.push(food);
     }
 }])
@@ -35,36 +36,49 @@ MyApp.controller('addFoodController',[ '$scope', function ($scope) {
 //     }
 // });
 
-MyApp.factory('DataService', function () {
-    var data = [
-        {
-            name: 'Ivan Ivanov',
-            age: 44
-        },
-        {
-            name: 'Ana Nikolova',
-            age: 27
-        },
-        {
-            name: 'Marta Angelova',
-            age: 30
-        },
-    ];
+// MyApp.factory('DataService', function () {
+//     var data = [
+//         {
+//             name: 'Ivan Ivanov',
+//             age: 44
+//         },
+//         {
+//             name: 'Ana Nikolova',
+//             age: 27
+//         },
+//         {
+//             name: 'Marta Angelova',
+//             age: 30
+//         },
+//     ];
 
-    var DataService = {};
+//     var DataService = {};
 
-    DataService.getData = function () {
-        return data;
-    }
+//     DataService.getData = function () {
+//         return data;
+//     }
 
-    return DataService;
-})
+//     return DataService;
+// })
 
-MyApp.factory('RealApiService', function ($http) {
+MyApp.factory('RealApiService',['$http', '$q', function ($http, $q) {
     var base_url = 'https://jsonplaceholder.typicode.com/users/1';
     var RealApiService = {};
+    
     RealApiService.getUsers = function () {
-        return $http.get(base_url);
+        var defered = $q.defer();
+        return $http.get(base_url)
+        // .then(
+        //     (res) => {
+        //         console.log(res.data);
+        //         defered.resolve(res.data);
+        //     },
+        //     (error) => {
+        //         console.log(error);
+        //         defered.reject(error);
+        //     }
+        // );
+        // return defered.promise;
     }
     return RealApiService;
-})
+}])

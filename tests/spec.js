@@ -37,62 +37,77 @@
 //     })
 // });
 
-describe('DataServiceSpec', function(){
-    beforeEach(module('MyApp'));
+// describe('DataServiceSpec', function(){
+//     beforeEach(module('MyApp'));
 
-    var data = [
-        {
-            name: 'Ivan Ivanov',
-            age: 44
-        
-        },
-        {
-            name: 'Ana Nikolova',
-            age: 27
-        },
-        {
-            name: 'Marta Angelova',
-            age: 30
-        },
-    ];
-    
-    var DataService;
+//     var data = [
+//         {
+//             name: 'Ivan Ivanov',
+//             age: 44
 
-    beforeEach(inject(function(_DataService_){
+//         },
+//         {
+//             name: 'Ana Nikolova',
+//             age: 27
+//         },
+//         {
+//             name: 'Marta Angelova',
+//             age: 30
+//         },
+//     ];
 
-        DataService = _DataService_;
-    }));
+//     var DataService;
 
-    it('Should return data...', function(){
-        var dataServiceData = DataService.getData();
-        console.log(dataServiceData);
-        expect(dataServiceData).toEqual(data);
-    })
+//     beforeEach(inject(function(_DataService_){
 
-})
-
-// describe('RealApiService', function(){
-//     var httpBackend, RealApiService;
-//     beforeEach(inject(function(_$httpBackend_, _RealApiService_){
-//         httpBackend = _$httpBackend_;
-//         RealApiService = _RealApiService_;
-//         console.log(httpBackend);
+//         DataService = _DataService_;
 //     }));
 
-//     it('Test RealApiService behaviour', function(){
-//         var returnedDataByBackend = {};
-//         var url = 'https://jsonplaceholder.typicode.com/users/1';
-//         var apiResult = {};
-
-//         //prepare the call of GET request
-//         httpBackend.expectGET(url).respond(returnedDataByBackend);
-//         RealApiService.getUsers().then(res => {
-//             apiResult = res.data;
-
-//         });
-
-//         //execute GET request
-//         httpBackend.flush();
-//         expect(apiResult).toEqual(returnedDataByBackend);
+//     it('Should return data...', function(){
+//         var dataServiceData = DataService.getData();
+//         console.log(dataServiceData);
+//         expect(dataServiceData).toEqual(data);
 //     })
+
 // })
+
+describe('RealApiService', function () {
+    var httpBackend, RealApiService;
+    
+
+    beforeEach(function () {
+        module('MyApp');
+        inject(function (_$httpBackend_, _RealApiService_) {
+            httpBackend = _$httpBackend_;
+            RealApiService = _RealApiService_;
+            console.log('httpBackend obj-> ', httpBackend);
+        })
+    });
+
+    // make sure no expectations were missed in your tests.
+    afterEach(function () {
+        httpBackend.verifyNoOutstandingExpectation();
+        httpBackend.verifyNoOutstandingRequest();
+    });
+    it('Test RealApiService behaviour', function () {
+        var returnedDataByBackend = {};
+        var url = 'https://jsonplaceholder.typicode.com/users/1';
+        var apiResult = [];
+
+        console.log('Check defined httpBackend...');
+        expect(httpBackend).toBeDefined();
+        console.log('Check defined RealApiService...');
+        expect(RealApiService).toBeDefined();
+
+        //prepare the call of GET request
+        httpBackend.expectGET(url).respond(returnedDataByBackend);
+        RealApiService.getUsers().then((res) => {
+            apiResult = res.data;
+            expect(apiResult).toBeTruthy();
+        });
+        console.log(apiResult);
+        //execute GET request
+        httpBackend.flush();
+        expect(apiResult).toEqual(returnedDataByBackend);
+    })
+})
