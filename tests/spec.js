@@ -90,9 +90,10 @@ describe('RealApiService', function () {
         httpBackend.verifyNoOutstandingRequest();
     });
     it('Test RealApiService behaviour', function () {
-        var returnedDataByBackend = {};
+        var returnedDataByBackend={};
+        var apiResult={};
+
         var url = 'https://jsonplaceholder.typicode.com/users/1';
-        var apiResult = [];
 
         console.log('Check defined httpBackend...');
         expect(httpBackend).toBeDefined();
@@ -100,14 +101,23 @@ describe('RealApiService', function () {
         expect(RealApiService).toBeDefined();
 
         //prepare the call of GET request
-        httpBackend.expectGET(url).respond(returnedDataByBackend);
-        RealApiService.getUsers().then((res) => {
+
+        RealApiService.getUsers()
+        .then(
+            (res) => {
             apiResult = res.data;
-            expect(apiResult).toBeTruthy();
+
         });
-        console.log(apiResult);
-        //execute GET request
+        httpBackend.expectGET(url).respond(200, returnedDataByBackend);
         httpBackend.flush();
+
+        expect(apiResult).toBeTruthy();
+        expect(apiResult).not.toBeUndefined();
+
+        console.log(apiResult);
+        console.log(returnedDataByBackend);
+
+        //execute GET request
         expect(apiResult).toEqual(returnedDataByBackend);
     })
 })

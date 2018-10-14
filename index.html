@@ -1,26 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="MyApp">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+
     <link rel="stylesheet" href="node_modules/jasmine-core/lib/jasmine-core/jasmine.css">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-
+    
+    <!-- <script src="https://code.angularjs.org/1.7.4/angular.min.js"></script> -->
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/angular-mocks/angular-mocks.js"></script>
+    <script scr="node_modules/angular-ui-bootstrap/dist/ui-bootstrap.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
 
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.4/angular.min.js"></script> -->
-    <script src="node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
+    <!--Jasmine  -->
+    <!-- <script src="node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
     <script src="node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
-    <script src="node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
-    <!-- <script src="node_modules/angular/angular.js"></script> -->
-    <script src="node_modules/angular-mocks/angular-mocks.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="https://code.angularjs.org/1.7.4/angular.min.js"></script>
-
+    <script src="node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script> -->
+    <!-- /jasmine -->
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> -->
 
 
@@ -28,13 +31,13 @@
 </head>
 
 <body ng-app="MyApp">
-    <div ng-controller="foodController">
-    </div>
-    <div ng-controller="addFoodController">
+    <!-- <div ng-controller="foodController">
+    </div> -->
+    <div ng-controller="TestHttpController">
         <div class="row">
             <div class="col-md-7 col-lg-5 col-sm-9" style="text-align:center">
-                <form action="" ng-submit="addFood()" class="form-group">
-                    <input type="text" name="food.name" value="" ng-model="food.name" class="form-control" required>
+                <form action="" ng-submit="" class="form-group">
+                    <input type="text" name="food.name" value="name" ng-model="food.name" class="form-control" required>
                     <div class="btn-group" data-toggle="buttons">
 
                         <label class="btn btn-primary" ng-model="food.type='Breakfast'" btn-checkbox>
@@ -52,8 +55,10 @@
                     </div>
                     <button ng-click="clearForm()" class="form-control">Add</button>
                 </form>
-                <ul ng-repeat="food in foods">
-                    <li>{{food.name}} <label for="">{{food.type}}</label></li>
+                <button class="form-control" ng-click="showData()">Show http</button>
+                <ul ng-repeat="item in data">
+                    <li>{{data | json}}</li>
+                    <!-- <li>{{item.name}} <label for="">{{item..type}}</label></li> -->
                 </ul>
             </div>
         </div>
