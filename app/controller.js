@@ -14,10 +14,11 @@ app.controller('CostController', ['$scope', function ($scope) {
             },
             {
                 id: 1,
-                name: 'Bilgaria'
+                name: 'Bulgaria'
             },
 
-        ]
+        ];
+        $scope.minCostsPerCountry = [];
 
     }
     $scope.setMinCostsPerCountry = function (selectedCountriesIds) {
@@ -86,6 +87,7 @@ app.controller('CostController', ['$scope', function ($scope) {
             }
         }
         minCostsPerCountry = $scope.setMinCostsPerCountry(selectedCountriesIds);
+        $scope.minCostsPerCountry = minCostsPerCountry;
         for (var i in selectedCountriesIds) {
             minCostsPerCountry.forEach((item) => {
                 if (item.id == selectedCountriesIds[i]) {
@@ -115,4 +117,5 @@ app.controller('CostController', ['$scope', function ($scope) {
     }
 
     $scope.Init();
+    $scope.minCost = $scope.calculateCampaignMinCost($scope.selectedCountries);
 }])
