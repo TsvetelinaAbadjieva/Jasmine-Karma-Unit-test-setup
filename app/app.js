@@ -1,17 +1,17 @@
 'use strict'
 var MyApp = angular.module('MyApp', [])
-// var MyApp = angular.module('MyApp', ['ngModel','ngRoute','ui.bootstrap'])
+    // var MyApp = angular.module('MyApp', ['ngModel','ngRoute','ui.bootstrap'])
 
-// .controller('foodController', ['$scope', function ($scope) {
-//     $scope.food = {
-//         breakfast: 'Breakfast',
-//         lunch: 'Lunch',
-//         dinner: 'Dinner'
-//     }
-//     $scope.food.breakfast = 'Hello';
-// }])
+    // .controller('foodController', ['$scope', function ($scope) {
+    //     $scope.food = {
+    //         breakfast: 'Breakfast',
+    //         lunch: 'Lunch',
+    //         dinner: 'Dinner'
+    //     }
+    //     $scope.food.breakfast = 'Hello';
+    // }])
 
-.factory('RealApiService', ['$http', '$q', function ($http, $q) {
+    .factory('RealApiService', ['$http', '$q', function ($http, $q) {
         var base_url = 'https://jsonplaceholder.typicode.com/users/1';
         var options = {
             headers: {
@@ -37,17 +37,36 @@ var MyApp = angular.module('MyApp', [])
             // );
             // return defered.promise;
         }
-        RealApiService.getUsersAsObject = function(){
-            var defer = $q.defer(); 
+        RealApiService.getUsersAsObject = function () {
+            var defer = $q.defer();
             var data = {};
             $http.get(base_url).then((res) => {
-                console.log('in function',res.data);
-                 return data = res.data;
+                console.log('in function', res.data);
+                defer.resolve(res.data);
+                // return data = res.data;
             })
-            return data;
-            // return defer.promise;
+            // return data;
+            return defer.promise;
         }
         return RealApiService;
+    }])
+    .factory('Users', ['RealApiService', '$q', function (RealApiService, $q) {
+        var Users = {};
+        Users.userlist = [];
+        Users.get = function () {
+            var defer = $q.defer();
+            return RealApiService.getUsers();
+            // .then((data) => {
+            //     defer.resolve(data.data);
+            // }, function (error) {
+            //     defer.reject(error)
+            // })
+            // return defer.promise;
+        }
+        Users.getOne = function () {
+            return RealApiService.getUsersAsObject();
+        }
+        return Users;
     }])
 
     .controller('TestHttpController', ['$scope', 'RealApiService', '$http', function ($scope, RealApiService, $http) {
@@ -62,7 +81,7 @@ var MyApp = angular.module('MyApp', [])
         //     console.log('in add')
         // }
         $scope.data = [];
-        $scope.showData = function(){
+        $scope.showData = function () {
             alert('hei')
             RealApiService.getUsers().then(
                 (res) => {
