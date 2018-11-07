@@ -1,3 +1,6 @@
+/**
+ *  Test of service using ohter injected service which is  previously mocked (http request is mocked)
+ */
 describe('Service test', function () {
     var Users, result, mockService;
     beforeEach(module('MyApp'));
@@ -17,6 +20,7 @@ describe('Service test', function () {
     beforeEach(inject(function (_Users_) {
         Users = _Users_;
     }))
+    
     describe('Check if Users service is called', function () {
         it('user.get should be called with injected service RealApiService', function () {
             result = Users.get();

@@ -1,3 +1,7 @@
+/**
+ * In this is a controller are calculated the maximum of the minimum costs per selected country list
+ * 
+ */
 var app = angular.module('app.campaign', []);
 app.controller('CostController', ['$scope', function ($scope) {
 

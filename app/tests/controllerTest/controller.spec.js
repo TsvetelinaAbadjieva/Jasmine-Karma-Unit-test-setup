@@ -57,7 +57,7 @@ describe('Controllers', function () {
 
         beforeEach(inject(function (_$controller_, _$rootScope_) {
             $scope = _$rootScope_.$new();
-            $controller = _$controller_('CostController as ctr', { '$scope': $scope });
+            $controller = _$controller_('CostController', { '$scope': $scope });
         }));
 
         it('Should call Controller.Init function', function () {
@@ -91,7 +91,7 @@ describe('Controllers', function () {
             it('Check  $scope.setMinCostPerCountry for empty list of countries...', function () {
                 var result = $scope.setMinCostsPerCountry(emptyCountrylistIds);
                 expect($scope.setMinCostsPerCountry(emptyCountrylistIds)).toEqual(defaultResult);
-                console.log('Controller.setMinCostsPerCountry function is calculated...', result);
+                console.log('Controller.setMinCostsPerCountry function For Empty Countrylistis calculated...', result);
             })
             it('Calculate Min Cost per Empty Country', function () {
                 expect($scope.calculateCampaignMinCost(emptyCountrylistIds)).toEqual(minCost);

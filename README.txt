@@ -1,3 +1,14 @@
+Install Karma
+
+1. Install Node.js version > 
+2. npm install karma karma-jasmine jasmine-core karma-chrome-launcher --save-dev
+3. npm install -g karma-cli
+4. karma init
+Serie of steps will lead to configure karma.conf.js
+
+It could be created also manually by copy this code snipped and change the files section with the custom files:
+
+// begin Karma configuration
 // Karma configuration
 // Generated on Sat Sep 29 2018 20:21:14 GMT+0300 (EEST)
 
@@ -17,8 +28,8 @@ module.exports = function(config) {
     files: [
       'node_modules/angular/angular.js',
       'node_modules/angular-mocks/angular-mocks.js',
-      'app/tests/**/*!(.spec.)*.js',
-      'app/tests/**/*.spec.js',
+      'app/*.js',
+      'tests/*spec.js',
     ],
 
 
@@ -70,3 +81,8 @@ module.exports = function(config) {
     concurrency: Infinity
   })
 }
+
+//end karma.conf.js
+
+Start Karma server
+5. karma start
