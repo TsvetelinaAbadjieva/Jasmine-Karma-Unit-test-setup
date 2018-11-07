@@ -1,14 +1,11 @@
 describe('Service test', function () {
-    var Users, result, mockService, Campaign;
+    var Users, result, mockService, Users;
     // 'ui.router', 'datatables', 'datatables.bootstrap'
     
 //Declare before All dependencies, used by app.campaign
     beforeEach(function(){
-        angular.module('ui.router',[]);
-        angular.module('datatables',[])
-        angular.module('datatables.bootstrap',[])
-        // module('app.campaign',[])
-        angular.module('app.campaign',['ui.router','datatables','datatables.bootstrap'])
+        // angular.module('ui.router',[]);
+        angular.module('ServiceModule')
     });
 
     beforeEach(function () {
@@ -18,7 +15,6 @@ describe('Service test', function () {
                 username: "Bret",
                 email: "Sincere@april.biz",
             }),
-            // getUsersAsObject: jasmine.createSpy('getUsersAsObject').and.callFake(function(){return { id: 1, "street": "Kulas Light" }})
         }
 
         module(function ($provide) {
@@ -26,36 +22,30 @@ describe('Service test', function () {
         })
     })
     beforeEach(module(function($provide){
-        $provide.factory('Campaign', function(){
-            var Campaign = {};
-            Campaign.getList = jasmine.createSpy('getList').and.callFake(function(){
+        $provide.factory('Users', function(){
+            var Users = {};
+            Users.getUsers = jasmine.createSpy('getUsers').and.callFake(function(){
                 return mockService.getData();
                 console.log(mockService.getData())
             })
-            return Campaign;
+            return Users
         })
     }))
 
-    beforeEach(inject(function (_Campaign_) {
-        Campaign = _Campaign_;
-        console.log(Campaign);
+    beforeEach(inject(function (_Users_) {
+        Users = _Users_;
+        console.log(Users);
     }));
 
     describe('Check if Users service is called', function () {
         it('user.get should be called with injected service RealApiService', function () {
             result = {};
-            result = Campaign.getList();
+            result = Users.getUsers();
             expect(mockService.getData).toHaveBeenCalled();
             expect(result).not.toBe(null);
             expect(result).toEqual(jasmine.objectContaining({ id: 1 }));
             console.log('result after',result);
 
         })
-        // it('Check the call of users.getOne with injected service RealApiService', function () {
-        //     var data = {};
-        //     data = Users.getOne();
-        //     expect(mockService.getUsersAsObject).toHaveBeenCalled();
-        //     expect(data).toEqual(jasmine.objectContaining({street: "Kulas Light" }));
-        // })
     })
 })
