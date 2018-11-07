@@ -38,7 +38,7 @@ describe('Service test', function () {
     }));
 
     describe('Check if Users service is called', function () {
-        it('user.get should be called with injected service RealApiService', function () {
+        it('users.getUsers should be called with injected service HttpService', function () {
             result = {};
             result = Users.getUsers();
             expect(mockService.getData).toHaveBeenCalled();
